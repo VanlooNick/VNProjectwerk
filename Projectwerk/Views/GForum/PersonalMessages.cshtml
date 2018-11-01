@@ -1,0 +1,54 @@
+﻿@using Projectwerk.Models
+@model List<PMDTO>
+<script src="../../Scripts/jquery-3.1.1.min.js"></script>
+@{
+    ViewBag.Title = "Personal messages";
+}
+
+<h2>Personal messages:</h2>
+<br />
+@foreach (PMDTO p in Model)
+{
+    <dl class="dl-horizontal whiteB2" onclick="setAsRead(@p.Id)">
+        <dt>Sender: </dt>
+        <dd>@p.SenderName @if (!p.Read)
+        {<span class="smaller">(   New Message)</span> }</dd>
+
+        <dt>Subject:</dt>
+        <dd>@p.Subject</dd>
+
+        <dt class="HSMessage">Message:</dt>
+        <dd class="HSMessageHide"> @Html.Raw(@p.ThePM) </dd>
+
+        <dt>@Html.ActionLink("Reply", "CreatePM", "GForum", new { sender = p.RecieverName, reciever = p.SenderName }, null)</dt>
+        <dd></dd>
+
+    </dl>    
+    <hr />
+
+    }
+
+    <script>
+        $(document).ready(function () {
+            $(".whiteB2").find('dt:nth-child(5)').hide();
+            $(".whiteB2").find('dd:nth-child(6)').hide();
+        });
+
+        $(".whiteB2").click(function () {
+            if ($(this).find('dt:nth-child(5)').is(':visible')) {
+                $(this).find('dt:nth-child(5)').slideUp();
+                $(this).find('dd:nth-child(6)').slideUp();
+            }
+            else {
+                $(this).find('dt:nth-child(5)').slideDown();
+                $(this).find('dd:nth-child(6)').slideDown();
+            }
+        });
+
+        function setAsRead(id) {
+            $.ajax({
+                url: '/GForum/SetPmRead?pmId=' + id,
+                success: function (data) { },
+            });
+        }
+    </script>

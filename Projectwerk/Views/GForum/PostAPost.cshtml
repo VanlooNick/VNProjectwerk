@@ -1,0 +1,32 @@
+﻿@using Projectwerk.Models
+@model PostDTO
+<script src="../../ckeditor/ckeditor.js"></script>
+
+<h2>Posting in "@Model.TopicName"</h2>
+
+<div class="whiteB">
+    @Html.Action("GetReply", "GForum", new { replyto = Model.ReplyToPostId })
+</div>
+<form id="form2" method="post" action="/api/Posts"
+      enctype="application/x-www-form-urlencoded">
+
+    <div>
+        @Html.TextAreaFor(@Model => @Model.ThePost, new { @class = "TextAreaStylePost", @rows = 10, @cols = 80, @id = "editor1", @name = "editor1" })
+
+        <script>
+            CKEDITOR.replace('editor1');
+        </script>
+    </div>
+    <div>
+        @Html.HiddenFor(model => model.TopicId)
+        @Html.HiddenFor(model => model.TopicName)
+        @Html.HiddenFor(model => model.PostedBy)
+        @Html.HiddenFor(model => model.ReplyToPostId)
+    </div>
+    @if (!Model.IsTopicLocked)
+    {
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    }
+</form>

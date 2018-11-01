@@ -1,0 +1,189 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-image: url(Images/pattern-13.jpg); 
+}
+
+h2{
+    color:rgb(200,200,200);
+}
+
+.whiteB{
+    background-color:white;
+    height:110%;
+    padding: 15px 0px 0px 26px;
+    border: 2px solid black;
+}
+
+.whiteB2{
+    background-color:white;
+    padding-top:10px;
+}
+
+#form4{
+    margin-top:12px;
+    display:inline-block;
+}
+
+.subB{
+    display:inline-block;
+}
+
+.brighterBlue{
+    color:rgb(140, 185, 255);
+}
+
+.replyDiv{
+    background-color: rgba(20, 20, 20, 0.15);
+    width: 97%;
+    padding: 10px;
+    margin-bottom:15px;
+    border: 2px solid black;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+table{
+    width:100%;
+    border: 2px solid black;
+}
+
+tr{
+    height:35px;
+}
+
+th{
+    padding:0px 0px 0px 20px;
+    background-color:darkgrey;
+}
+
+td{
+    padding:0px 0px 0px 20px;
+    vertical-align:central;
+}
+
+.trUnderline{
+    border-bottom: 1px solid grey;
+    background-color:rgb(240,240,240);
+}
+
+.smaller{
+    font-size:10px;
+}
+
+.userInfoCon{
+    padding:20px;
+    font-size:10px;
+    background-color:rgb(240,240,240);
+    width:150px;
+    border-right:1px solid grey;
+}
+
+.userInfoCon img{
+    display:block;
+    margin-bottom:10px;
+}
+
+.userInfoCon span{
+    display:block;
+}
+
+.postDivHead{
+    font-size:10px;
+    vertical-align:text-top;
+    padding-bottom:20px;
+
+}
+
+.postItself{
+    margin-top:10px;
+    min-height:90px;
+}
+
+.tdThePost{
+    padding: 5px 0px 0px 20px;
+    vertical-align:top;
+}
+
+.replyButton{
+    vertical-align:text-bottom;
+    background-image:url(Images/clickBG.png);
+    background-repeat:no-repeat;
+    padding-left:12px;
+    padding-bottom:8px;
+}
+
+.replyButton a{
+    color:white;
+}
+
+td:first-child, th:first-child {
+     border-left: none;
+}
+
+.TextAreaStylePost{
+    margin:12px 0px;
+    max-width:100%;
+    width:100%;
+    height:100px;
+}
+
+.TextAreaStylePostThinner{
+    margin:12px 0px;
+    max-width:100%;
+    width:100%;
+    height:30px;
+}
+
+.TextBoxTopicPost{
+    width:100%;
+    max-width:100%;
+}
+
+a:link{
+
+}
+
+a:visited{
+
+}
+
+a:hover{
+    text-decoration:none;
+}
+
+a:active{
+
+}
+
+.caseClosed
+{
+    font-size: 20px;
+}
+
+.tester{
+    border:none;
+}
+
+.pmCount{
+    margin-left:-10px;
+    color:white;
+}

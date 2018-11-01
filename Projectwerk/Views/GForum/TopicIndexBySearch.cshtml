@@ -1,0 +1,32 @@
+﻿@using Projectwerk.Models
+@model List<TopicDTO>
+
+@if (Model.Count > 0)
+{
+    <h2>Searchresults: @Model.Count</h2>
+}
+else
+{
+    <h2>No results</h2>
+}
+<hr />
+
+<div class="TableContainer">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Created by</th>
+            <th>Posts</th>
+        </tr>
+
+        @foreach (TopicDTO t in Model)
+        {
+            <tr class="trUnderline">
+                <td>@if (t.isLocked)
+                {<span>This thread has been closed</span> }  @Html.ActionLink(t.TopicName, "PostIndex", "GForum", new { topicId = t.Id, page = 1 }, null)</td>
+                <td>@t.CreatedBy</td>
+                <td>@t.PostAmount</td>
+            </tr>
+        }
+    </table>
+</div>

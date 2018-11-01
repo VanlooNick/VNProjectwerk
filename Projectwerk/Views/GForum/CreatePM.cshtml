@@ -1,0 +1,31 @@
+﻿@using Projectwerk.Models
+@model PMDTO
+<script src="../../ckeditor/ckeditor.js"></script>
+
+@{
+    ViewBag.Title = "CreatePM";
+}
+
+<h2>Send PM to: @Model.RecieverName</h2>
+
+<form id="form2" method="post" action="/api/PersonalMessages"
+      enctype="application/x-www-form-urlencoded">
+
+    <span class="brighterBlue">Subject: </span>    
+    @Html.TextBoxFor(@Model => @Model.Subject, new { @class = "TextAreaStylePostThinner" })
+
+    <span class="brighterBlue">Message:</span>
+    <div>
+        @Html.TextAreaFor(@Model => @Model.ThePM, new {@class = "TextAreaStylePost", @rows = 10, @cols = 80, @id = "editor1", @name = "editor1" })})
+        <script>                
+                CKEDITOR.replace( 'editor1' );
+        </script>
+    </div>
+
+    @Html.HiddenFor(@Model => Model.RecieverId)
+    @Html.HiddenFor(@Model => Model.SenderId)
+
+    <div>
+        <input type="submit" value="Submit"/>
+    </div>
+</form>

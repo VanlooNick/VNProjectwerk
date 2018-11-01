@@ -1,0 +1,30 @@
+﻿@using Projectwerk.Models;
+@model IEnumerable<UserDto>
+
+@{
+    ViewBag.Title = "Get all accounts";
+}
+
+<h2>Get all accounts</h2>
+<hr />
+<br />
+<div class="whiteB">
+    @foreach (UserDto u in Model)
+    {
+        using (Html.BeginForm("ChangeRole", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="subB">
+                @u.user.UserName is: @u.role
+                Change to:
+                @Html.DropDownList("ChangeToRole")
+                @Html.Hidden("UserId", u.user.Id)
+                @Html.Hidden("CurrentRole", u.role)
+
+                <input type="submit" value="Submit" class="subB" />
+
+            </div>
+        }
+        <hr />
+    }
+</div>

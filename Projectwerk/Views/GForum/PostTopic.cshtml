@@ -1,0 +1,33 @@
+﻿@using Projectwerk.Models
+@model PostTopicDTO2
+<script src="../../ckeditor/ckeditor.js"></script>
+
+<h2>Post topic</h2>
+
+<form id="form1" method="post" action="/api/Topics"
+      enctype="application/x-www-form-urlencoded">
+    @Html.AntiForgeryToken()
+    <div class="TextBoxTopicPost">
+        <span class="brighterBlue">Topic:</span>
+                @Html.TextBoxFor(Model => Model.TopicDto.TopicName, new { @class = "test" })
+        <br />
+    </div>
+
+    <br />
+
+    <div>
+        @Html.TextAreaFor(Model => Model.PostDto.ThePost, new { @class = "TextAreaStylePost", @rows = 10, @cols = 80, @id = "editor1", @name = "editor1" })}) })
+        <script>
+                CKEDITOR.replace( 'editor1' );
+        </script>
+    </div>
+
+    <div>
+        @Html.HiddenFor(Model => Model.TopicDto.ForumId)
+        @Html.HiddenFor(Model => Model.TopicDto.CreatedBy)
+        @Html.HiddenFor(Model => Model.PostDto.PostedBy)
+    </div>
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>

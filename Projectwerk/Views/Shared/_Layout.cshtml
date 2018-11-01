@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Forum", "Index", "GForum", new { area = "" }, new { @class = "navbar-brand" })             
+
+                @if (this.User.IsInRole("Owner"))
+                {
+                    @Html.ActionLink("AccountList", "GetAllAccounts", "Account", new { area = "" }, new { @class = "navbar-brand" }) 
+                }
+
+                <form id="form4" method="get" action="/GForum/TopicIndexBySearch"                      
+                      enctype="application/x-www-form-urlencoded">
+
+                    <input id="searchB" class="Input" name="searchBar" type="text" placeholder="search the forum" onkeypress="tableInputKeyPress(event)" />
+                    
+                </form>
+
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <br />
+        <footer>
+            <p class="brighterBlue">&copy; @DateTime.Now.Year - Projectwerk Nick Vanloo</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

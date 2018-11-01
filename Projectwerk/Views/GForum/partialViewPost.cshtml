@@ -1,0 +1,9 @@
+﻿@using Projectwerk.Models
+@model PostDTO
+
+    <div class="replyDiv">
+        @if (Model.ReplyToPostId != 0)
+        { @Html.Action("GetReply", "GForum", new { replyto = Model.ReplyToPostId })}
+        <p><b><i>@Model.PostedBy said:</i></b></p>
+        <p>@Html.Raw(@Model.ThePost)</p>
+    </div>

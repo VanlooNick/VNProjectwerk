@@ -1,0 +1,19 @@
+﻿@using Projectwerk.Models
+@model List<ForumDTO>
+@Styles.Render("~/Content/Site.css")
+<h2>Forum</h2>
+<hr />
+<br />
+<table>
+    <tr>
+        <th>Forum</th>
+        <th>Topics</th>
+    </tr>
+    @foreach (ForumDTO f in Model)
+    {
+        <tr class="trUnderline">
+            <td>@Html.ActionLink(f.ForumName, "TopicIndex", "GForum", new { forumId = f.Id, page = 1 }, null)</td>
+            <td>@f.TopicAmount</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,56 @@
+﻿@using Projectwerk.Models
+@model List<TopicDTO>
+
+<h2>@Model[0].ForumName</h2>
+<hr />  
+@Html.ActionLink("Make a new topic", "PostTopic", "GForum", new { forumId = Model[0].ForumId}, new { @class = "brighterBlue" })
+
+<div class="TableContainer">
+    <table>
+        <tr>
+            <th>Topic</th>
+            <th></th>
+            <th>Created by</th>
+            <th>Posts</th>
+        </tr>
+
+        @foreach (TopicDTO t in Model)
+        {
+            <tr class="trUnderline">
+                <td>@Html.ActionLink(t.TopicName, "PostIndex", "GForum", new { topicId = t.Id, page = 1}, null)</td>
+                <td>@if (t.isLocked) {<span>This thread has been closed</span> }  </td>
+                <td>@t.CreatedBy</td>
+                <td>@t.PostAmount</td>
+            </tr>
+        }        
+    </table>
+    @if (Model[0].CurrentPage != 1 && Model[0].TopicPages > 1)
+    {
+        @Html.ActionLink("<", "TopicIndex", "GForum", new { forumId = Model[0].ForumId, page = Model[0].CurrentPage - 1 }, new { @class = "brighterBlue" })
+        <span> </span>
+    }
+    else if(Model[0].CurrentPage == 1 && Model[0].TopicPages > 1)
+    {
+        <span>< </span>
+    }
+    @if (Model[0].TopicPages > 1)
+    {
+        for (int i = 0; i < Model[0].TopicPages; i++)
+        {
+            @Html.ActionLink("" + (i + 1), "TopicIndex", "GForum", new { forumId = Model[0].ForumId, page = i + 1 }, new { @class = "brighterBlue" })
+            <span> </span>
+        }
+    }
+    @if (Model[0].CurrentPage != Model[0].TopicPages && Model[0].CurrentPage < Model[0].TopicPages)
+    {
+        @Html.ActionLink(">", "TopicIndex", "GForum", new { forumId = Model[0].ForumId, page = Model[0].CurrentPage + 1 })
+        <span> </span>
+    }
+    else if(Model[0].CurrentPage == Model[0].TopicPages && Model[0].CurrentPage < Model[0].TopicPages)
+    {
+        <span> ></span>
+    }
+
+    @Html.ActionLink("Back to main forum", "Index", "GForum", new { @class = "brighterBlue" })
+</div>
+    

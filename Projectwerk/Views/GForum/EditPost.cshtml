@@ -1,0 +1,28 @@
+﻿@using Projectwerk.Models
+@model PostDTO
+
+<script src="../../ckeditor/ckeditor.js"></script>
+
+<h2>Edit your post.</h2>
+
+<form id="form3" method="post" action="/api/posts"
+      enctype="application/x-www-form-urlencoded">
+
+    @Html.Raw(Model.ThePost)
+    <div>
+        @Html.TextAreaFor(Model => Model.ThePost, new { @class = "TextAreaStylePost", @rows = 10, @cols = 80, @id = "editor2", @name = "editor2" })
+        <script>
+                CKEDITOR.replace( 'editor2' );
+        </script>
+    </div>
+
+    <div>
+        @Html.Hidden("id", Model.Id);
+        @Html.HiddenFor(Model => Model.TopicId)
+    </div>
+    
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    
+</form>

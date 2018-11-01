@@ -1,0 +1,122 @@
+﻿@using Projectwerk.Models
+@model List<PostDTO>
+
+@{
+    ViewBag.Title = "PostIndex";
+}
+
+<h2>@Model[0].TopicName</h2>
+<hr />
+
+@if (!Model[0].IsTopicLocked)
+{@Html.ActionLink("Make a new post", "PostAPost", "GForum", new { topicId = Model[0].TopicId, TopicName = Model[0].TopicName }, new { @class = "brighterBlue" })}
+else
+{<p>Topic is locked</p>}
+<div class="TableContainer">
+    <table>
+        <tr>
+            <th colspan="2">
+                @Model[0].TopicName @if (!Model[0].IsTopicLocked && (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner")))
+            { @Html.ActionLink("Lock thread", "LockTopic", "GForum", new { topicId = Model[0].TopicId }, null) }
+                else if (Model[0].IsTopicLocked && this.User.IsInRole("Owner"))
+                {
+                    @Html.ActionLink("UnLock thread", "LockTopic", "GForum", new { topicId = Model[0].TopicId }, null)
+                }
+            </th>
+        </tr>
+        @foreach (PostDTO p in Model)
+        {
+            <tr class="trUnderline">
+                <td class="userInfoCon">
+                    <img src=@p.emailHash />
+                    <span>
+                        @if (@p.Role != "User")
+                        {@p.Role}
+                    </span>
+                    <span>
+                        @if (User.Identity.IsAuthenticated)
+                        {@Html.ActionLink("PM", "CreatePM", "GForum", new { sender = this.User.Identity.Name, reciever = p.PostedBy }, null)}
+                    </span>
+                    @if (this.User.IsInRole("Owner") || this.User.IsInRole("Administrator"))
+                    {
+                        if (this.User.Identity.Name != p.PostedBy && p.Role == "User")
+                        {<span>@Html.ActionLink("Ban ", "Ban", "Account", new { forumName = p.PostedBy, topicID = p.TopicId, topicName = p.TopicName }, null)</span>}
+
+                        <span>@Html.ActionLink("Delete post", "DeletePost", "GForum", new { postId = p.Id }, null)</span>
+                    }
+                </td>
+                
+                <td class="tdThePost">
+                    
+                    @if (!p.isDeleted)
+                    {
+                        <div class="postDivHead">
+                            <span>Posted on @p.TimePosted by @p.PostedBy</span>
+                            @if (this.User.Identity.Name == p.PostedBy)
+                            {@Html.ActionLink("Edit post", "EditPostV", "Gforum", new { postId = p.Id }, null) }
+
+                        </div>
+
+                        <div class="postItself">
+                            @if (p.ReplyToPostId != 0)
+                            {
+                            @Html.Action("GetReply", "GForum", new { replyto = p.ReplyToPostId });
+                            }
+
+                            <p>@Html.Raw(@p.ThePost)</p>
+                        </div>
+                        if (User.Identity.IsAuthenticated)
+                        {
+                        <div class="replyButton">
+                            @Html.ActionLink("Reply", "Reply", "GForum", new { topicId = p.TopicId, topicName = p.TopicName, postId = p.Id }, null)
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        <span>This post has been deleted.</span>
+                    }
+                </td>
+            </tr>
+        }
+        @if (Model[0].IsTopicLocked)
+        {
+            <tr class="whiteB">
+                <td colspan="2" class="caseClosed">This topic is closed</td>
+            </tr>
+        }
+    </table>
+
+    @if (Model[0].CurrentPage != 1 && Model[0].PostPages > 1)
+    {
+        @Html.ActionLink("<", "PostIndex", "GForum", new { topicId = Model[0].TopicId, page = Model[0].CurrentPage - 1 }, null)
+        <span> </span>
+    }
+    else if (Model[0].CurrentPage == 1 && Model[0].PostPages > 1)
+    {
+        <span>< </span>
+    }
+
+
+    @if (Model[0].PostPages > 1)
+    {
+        for (int i = 0; i < Model[0].PostPages; i++)
+        {
+            @Html.ActionLink("" + (i + 1), "PostIndex", "GForum", new { topicId = Model[0].TopicId, page = i + 1 }, null)
+            <span> </span>
+        }
+    }
+
+
+    @if (Model[0].CurrentPage != Model[0].PostPages && Model[0].CurrentPage < Model[0].PostPages)
+    {
+        @Html.ActionLink(">", "PostIndex", "GForum", new { topicId = Model[0].TopicId, page = Model[0].CurrentPage + 1 }, null)
+        <span> </span>
+    }
+    else if (Model[0].CurrentPage == Model[0].PostPages && Model[0].PostPages > 1)
+    {
+        <span> ></span>
+    }
+
+    @Html.ActionLink("Back to " + Model[0].ForumName, "TopicIndex", "GForum", new { forumId = Model[0].ForumId, page = 1 }, new { @class = "brighterBlue" })
+</div>
